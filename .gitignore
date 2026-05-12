@@ -1,0 +1,4 @@
+.env
+agentgateway
+agentgateway-*
+*.log

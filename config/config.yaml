@@ -1,0 +1,7 @@
+llm:
+  models:
+    - name: gemini-2.5-flash
+      provider: gemini
+      params:
+        model: gemini-2.5-flash
+        apiKey: "$LAB_GEMINI_API_KEY"
