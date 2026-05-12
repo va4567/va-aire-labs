@@ -1,14 +1,14 @@
 # va-aire-lab-1
 
-This repository shows a simple configuration for using the Gemini API with a secret key stored in Codespace Secret.
+This repository shows a configuration for using the Gemini API with a secret key stored in Codespace Secret.
 
 ## Junior lvl
-## Configuration
+### Configuration
 
 - `config/config.yaml` defines the model and uses the environment variable `LAB_GEMINI_API_KEY`.
 - API key in the Codespace secret `LAB_GEMINI_API_KEY`.
 
-## Curl output
+### Curl output
 
 Call the local service and verify the endpoint works.
 
@@ -44,3 +44,4 @@ Response structure:
     "object": "chat.completion"
 }
 ```
+## Middle lvl

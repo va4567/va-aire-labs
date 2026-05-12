@@ -1,0 +1,21 @@
+apiVersion: kagent.dev/v1alpha2
+kind: Agent
+metadata:
+  name: k8s-basic-agent
+  namespace: kagent
+spec:
+  type: Declarative
+  description: "Basic k8s agent for lab01"
+  declarative:
+    systemMessage: "You are a k8s assistant. Help SREs understand their cluster state."
+    modelConfig: default-model-config
+    tools:
+      - type: McpServer
+        mcpServer:
+          apiGroup: kagent.dev
+          kind: RemoteMCPServer
+          name: kagent-tool-server
+          toolNames:
+            - k8s_describe_resource
+            - k8s_get_resource_yaml
+            - k8s_get_events
