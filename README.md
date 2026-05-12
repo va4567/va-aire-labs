@@ -2,6 +2,7 @@
 
 This repository shows a simple configuration for using the Gemini API with a secret key stored in Codespace Secret.
 
+## Junior lvl
 ## Configuration
 
 - `config/config.yaml` defines the model and uses the environment variable `LAB_GEMINI_API_KEY`.
