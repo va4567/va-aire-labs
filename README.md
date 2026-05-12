@@ -74,3 +74,14 @@ k8s/
 └── kagent/
     └── agent.yaml          # custom k8s-basic-agent
 ```
+
+## Max level — Kubernetes Gateway API
+ 
+### What was done
+ 
+- Configured agentgateway routing using the Kubernetes Gateway API instead of standalone Helm config
+- Installed Gateway API CRDs (`gateway.networking.k8s.io/v1`)
+- Created a `Gateway` resource with `agentgateway` GatewayClass
+- Created an `AgentgatewayBackend` CRD with provider-level auth via `secretRef`
+- Created an `HTTPRoute` that binds Gemini backend to the Gateway listener
+- Verified end-to-end LLM routing through the Gateway API control plane
