@@ -5,9 +5,15 @@ metadata:
   namespace: agentgateway-system
 spec:
   ai:
-    provider:
-      gemini:
-        model: gemini-2.5-flash
+    groups:
+      - providers:
+          - name: gemini-provider
+            gemini:
+              model: gemini-2.5-flash
+            policies:
+              auth:
+                secretRef:
+                  name: gemini-secret
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
