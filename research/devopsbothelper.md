@@ -6,6 +6,32 @@ Severity: **Critical** / **High** / **Medium**
 Dimensions: Business Impact · Security · Impl. Effort
 
 ---
+ 
+## What's Already Working Well
+ 
+The bot is delivering real value today. These are solid engineering decisions worth preserving.
+ 
+**Graceful degradation chain** — multi-layer fallback (`embedder nil → Claude-only`, both searches empty → Claude-only) means users always get a response. No hard failures exposed to Slack. This is the right default for an internal tool.
+ 
+**RAG dual-search** — parallel query against `solutions` (vector) and `docs` (DocSearcher) with threshold filtering (`DOCS_RAG_THRESHOLD 0.70`) gives meaningful signal separation between KB types. Running both in parallel is a good latency choice.
+ 
+**Replace semantics via `import_id`** — the docs flow does a `DeleteByPayload(import_id)` before writing, so every repo push results in a clean, deduplicated chunk set. No stale docs accumulate from CI-driven imports.
+ 
+**Section-aware chunking** — the Chunker splits on `##` / `###` / `####` without size-merging or splitting, keeping prose and fenced code blocks as coherent units. This directly improves retrieval precision compared to naive character-based chunking.
+ 
+**Compressor producing structured JSON** — Claude compresses Slack threads into `title / problem / solution / tags` before embedding. Structured payloads make filtering, search, and future tooling significantly easier than raw thread text.
+ 
+**Knowledge Capture UX** — the "Save solution" button appears only on Claude-only answers (no RAG hit), which is exactly when a new solution is worth capturing. The `/save` command as a manual fallback covers edge cases cleanly.
+ 
+**Tool loop with local handlers** — custom tools (`get_gitlab_job_error`, `get_argocd_app`, `search_knowledge`, etc.) give Claude real infrastructure context without exposing credentials to the model directly. The tool boundary is the right abstraction here.
+ 
+**Multi-turn context via thread history** — using Slack thread replies as conversation history enables coherent follow-up questions inside a thread. This is non-trivial to implement correctly in Socket Mode and it works.
+ 
+**Single binary deployment** — one Go binary with embedded system prompt (`//go:embed`) keeps the operational surface minimal. Easy to version, easy to roll back, no runtime config drift.
+ 
+**`EnsureCollection` idempotent on startup** — Qdrant collections are created idempotently at boot. Safe to restart without manual provisioning steps, which matters for a pod-based deployment.
+ 
+---
 
 ## Security
 
