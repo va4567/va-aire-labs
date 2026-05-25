@@ -1,6 +1,6 @@
-# va-aire-lab-1
- 
-This repository demonstrates deploying agentgateway as an LLM gateway with Gemini API integration.
+# va-aire-labs
+
+# lab-1
  
 ## Junior level — Standalone binary
  
